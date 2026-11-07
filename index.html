@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareTracker - Old Age Home System</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using FontAwesome for icons similar to Lucide -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fa-solid fa-staff-snake"></i> CareTracker</h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-target="dashboard-view"><i class="fa-solid fa-list-check"></i> Dashboard</button>
+                <button class="nav-btn" data-target="residents-view"><i class="fa-solid fa-users"></i> Residents</button>
+                <button class="nav-btn" data-target="prescriptions-view"><i class="fa-solid fa-prescription-bottle-medical"></i> Prescriptions</button>
+                <button class="nav-btn" data-target="audit-view"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- 1. CAREGIVER DASHBOARD -->
+            <section id="dashboard-view" class="view-section active">
+                <header>
+                    <h1>Today's Schedule</h1>
+                    <p class="subtitle">Medications due for administration</p>
+                </header>
+                <div class="empty-state hidden" id="dashboard-empty">
+                    <i class="fa-solid fa-check-circle" style="font-size: 3rem; color: var(--success);"></i>
+                    <h3>All caught up!</h3>
+                    <p>No medications due right now.</p>
+                </div>
+                <div id="medication-timeline" class="card-grid">
+                    <!-- Cards injected via JS -->
+                </div>
+            </section>
+
+            <!-- 2. RESIDENT MANAGEMENT -->
+            <section id="residents-view" class="view-section hidden">
+                <header>
+                    <h1>Resident Directory</h1>
+                </header>
+                <div class="panel">
+                    <h3>Add New Resident</h3>
+                    <form id="add-resident-form" class="data-form">
+                        <input type="text" id="res-name" placeholder="Full Name" required>
+                        <input type="number" id="res-age" placeholder="Age" required>
+                        <input type="text" id="res-room" placeholder="Room Number" required>
+                        <input type="text" id="res-notes" placeholder="Medical Notes / Allergies">
+                        <button type="submit" class="btn btn-primary">Add Resident</button>
+                    </form>
+                </div>
+                <div class="panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="residents-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. PRESCRIPTION SETUP -->
+            <section id="prescriptions-view" class="view-section hidden">
+                <header>
+                    <h1>Assign Medications</h1>
+                </header>
+                <div class="panel">
+                    <form id="assign-med-form" class="data-form">
+                        <select id="med-resident-select" required>
+                            <option value="">Select Resident...</option>
+                        </select>
+                        <input type="text" id="med-name" placeholder="Medication Name" required>
+                        <input type="text" id="med-dosage" placeholder="Dosage (e.g., 50mg)" required>
+                        <input type="time" id="med-time" required>
+                        <button type="submit" class="btn btn-primary">Assign to Schedule</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 4. AUDIT LOGS -->
+            <section id="audit-view" class="view-section hidden">
+                <header>
+                    <h1>Audit & History Logs</h1>
+                </header>
+                <div class="panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Caregiver</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast Notification System -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
